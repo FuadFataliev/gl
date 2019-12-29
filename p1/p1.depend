@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1577441029 source:d:\fdocs\codeblocs\gl\p1\painting.cpp
+1577634813 source:d:\fdocs\codeblocs\gl\p1\painting.cpp
 	"..\tgaimage.h"
 	<cmath>
 	"painting.h"
+	"iostream"
 
 1577121086 d:\fdocs\codeblocs\gl\tgaimage.h
 	<fstream>
@@ -15,11 +16,25 @@
 	<math.h>
 	"tgaimage.h"
 
-1577440890 source:d:\fdocs\codeblocs\gl\p1\main.cpp
+1577638640 source:d:\fdocs\codeblocs\gl\p1\main.cpp
 	<iostream>
 	"..\tgaimage.h"
 	"painting.h"
+	"model.h"
+	<string>
 
-1577441122 d:\fdocs\codeblocs\gl\p1\painting.h
+1577468637 d:\fdocs\codeblocs\gl\p1\painting.h
 	"..\tgaimage.h"
+
+1577637934 source:d:\fdocs\codeblocs\gl\p1\model.cpp
+	"model.h"
+	<string>
+	<fstream>
+	<sstream>
+	<iostream>
+
+1577622167 d:\fdocs\codeblocs\gl\p1\model.h
+	<string>
+	<vector>
+	"painting.h"
 

@@ -33,6 +33,12 @@ struct Vert3{
 
 	Vert3(T x, T y, T z) : x(x), y(y), z(z) {};
 	Vert3() : x(0), y(0), z(0) {};
+
+	void set(T const x, T const y, T const z){
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	};
 };
 
 typedef Vert3<int> V3I;

@@ -35,6 +35,8 @@
 		<Unit filename="../tgaimage.cpp" />
 		<Unit filename="../tgaimage.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="model.cpp" />
+		<Unit filename="model.h" />
 		<Unit filename="painting.cpp" />
 		<Unit filename="painting.h" />
 		<Extensions>

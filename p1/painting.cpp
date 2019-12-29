@@ -1,9 +1,12 @@
 #include "..\tgaimage.h"
 #include <cmath>
 #include "painting.h"
+#include "iostream"
 
 
 void line(int x1, int y1, int x2, int y2, TGAImage &img, TGAColor const &clr){
+	//std::cout << "(" << x1 << "," << y1 << ") - (" << x2 << "," << y2 << ")" << std::endl;
+
 	bool changed = false;
 
 	if (std::abs(x2 - x1) < std::abs(y2 - y1)){
