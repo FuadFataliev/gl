@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include "..\tgaimage.h"
 
 TGAColor const WHITE(255, 255, 255, 0);
@@ -49,10 +50,16 @@ struct Vert3{
 		this->z = z;
 	};
 
+	Vert3 norm() {
+		//size_t len = sqrt(x*x + y*y + z*z);
+		return (*this) * (1 / sqrt(x*x + y*y + z*z));
+	}
+
 	Vert3 operator+(const Vert3& v) {return Vert3(x + v.x, y + v.y, z + v.z);}
 	Vert3 operator-(const Vert3& v) {return Vert3(x - v.x, y - v.y, z - v.z);}
-	Vert3 operator*(const Vert3& v) {return Vert3(x * v.x, y * v.y, z * v.z);}
+	T operator*(const Vert3& v) {return x * v.x + y * v.y + z * v.z;}
 	Vert3 operator*(const float f) {return Vert3(f * x, f * y, f * z);}
+	Vert3 operator^(const Vert3& v) {return Vert3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);}
 	//Vert3 operator+(Vert3 l, Vert3 const & r) {l.set(l.x + r.x, l.y + r.y, l.z + p.z); return l;}
 	//Vert3 operator=(Vert3 const & p) {this->set(p.x, p.y, p.z); return this*;};
 };

@@ -267,8 +267,9 @@ void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr, int32_
 			if (x == x1 || x == x2)
 				col = GREEN;
 			else
-				col = clr;
-
+				//col = TGAColor(clr.val * brightness, clr.bytespp);
+				col = clr; //TGAColor(clr.r * brightness, clr.g * brightness, clr.b * brightness, clr.bytespp);
+			col = clr;
 			int32_t z = z1;
 
 			if (x1 != x2)
