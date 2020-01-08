@@ -93,7 +93,7 @@ void triangle(V2I const &v1, V2I const &v2, V2I const &v3, TGAImage &img, TGACol
 //    }
 //}
 
-void triangle(V2I v1, V2I v2, V2I v3, TGAImage &img, TGAColor const &clr){
+void triangle_old(V2I v1, V2I v2, V2I v3, TGAImage &img, TGAColor const &clr){
 	if (v1.y > v2.y)
 		std::swap(v1, v2);
 	if (v2.y > v3.y)
@@ -137,7 +137,7 @@ float calc_kz(V3I const &v1, V3I const &v2){
 	return (v2.z - v1.z) / (float)sqrt(sqr(v2.x - v1.x) + sqr(v2.y - v1.y));
 }
 
-void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr, int32_t *const zbuff){
+void triangle_old(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr, int32_t *const zbuff){
 	if (v1.y > v2.y)
 		std::swap(v1, v2);
 	if (v2.y > v3.y)
@@ -217,6 +217,50 @@ void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr, int32_
 					return;
 				}
 			}
+		}
+	}
+}
+
+
+void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr){ //, int32_t *const zbuff){
+	if (v1.y > v2.y)
+		std::swap(v1, v2);
+	if (v2.y > v3.y)
+		std::swap(v2, v3);
+	if (v1.y > v2.y)
+		std::swap(v1, v2);
+
+	int h13 = v3.y - v1.y;
+	int w13 = v3.x - v1.x + 1;
+
+	for (int y = 0; y < h13; ++y){
+		bool first_half = v1.y + y <= v2.y;
+
+		V3I a = first_half ? v1 : v2;
+
+		V3I dif = first_half ? v2 - v1 : v3 - v2;
+		size_t ah = dif.y;
+
+		if (ah == 0)
+			return;
+
+		int aw = dif.x + 1;
+
+		size_t x1 = a.x + aw * (y - (first_half ? 0 : a.y)) / (float)(ah + 1);
+		size_t x2 = v1.x + w13 * (y / (float)(h13 + 1));
+
+		if (x1 > x2)
+			std::swap(x1, x2);
+
+		for (size_t x = x1; x <= x2; ++x) {
+			TGAColor col;
+
+			if (x == x1 || x == x2)
+				col = GREEN;
+			else
+				col = clr;
+
+			img.set(x, v1.y + y, col);
 		}
 	}
 }

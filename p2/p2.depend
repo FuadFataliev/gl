@@ -1,0 +1,109 @@
+# depslib dependency file v1.0
+1577634813 source:d:\fdocs\codeblocs\gl\p1\painting.cpp
+	"..\tgaimage.h"
+	<cmath>
+	"painting.h"
+	"iostream"
+
+1577121086 d:\fdocs\codeblocs\gl\tgaimage.h
+	<fstream>
+
+1577121086 source:d:\fdocs\codeblocs\gl\tgaimage.cpp
+	<iostream>
+	<fstream>
+	<string.h>
+	<time.h>
+	<math.h>
+	"tgaimage.h"
+
+1577638640 source:d:\fdocs\codeblocs\gl\p1\main.cpp
+	<iostream>
+	"..\tgaimage.h"
+	"painting.h"
+	"model.h"
+	<string>
+
+1577468637 d:\fdocs\codeblocs\gl\p1\painting.h
+	"..\tgaimage.h"
+
+1577637934 source:d:\fdocs\codeblocs\gl\p1\model.cpp
+	"model.h"
+	<string>
+	<fstream>
+	<sstream>
+	<iostream>
+
+1577622167 d:\fdocs\codeblocs\gl\p1\model.h
+	<string>
+	<vector>
+	"painting.h"
+
+1577637934 source:d:\fdocs\codeblocs\gl\p2\model.cpp
+	"model.h"
+	<string>
+	<fstream>
+	<sstream>
+	<iostream>
+
+1577622167 d:\fdocs\codeblocs\gl\p2\model.h
+	<string>
+	<vector>
+	"painting.h"
+
+1578239385 d:\fdocs\codeblocs\gl\p2\painting.h
+	"..\tgaimage.h"
+
+1578238111 source:d:\fdocs\codeblocs\gl\p2\main.cpp
+	<iostream>
+	"..\tgaimage.h"
+	"painting.h"
+	"model.h"
+	<string>
+	<limits>
+
+1578240304 source:d:\fdocs\codeblocs\gl\p2\painting.cpp
+	"..\tgaimage.h"
+	<cmath>
+	"painting.h"
+	"iostream"
+
+1577119324 source:d:\github\gl\tgaimage.cpp
+	<iostream>
+	<fstream>
+	<string.h>
+	<time.h>
+	<math.h>
+	"tgaimage.h"
+
+1577119324 d:\github\gl\tgaimage.h
+	<fstream>
+
+1578408341 source:d:\github\gl\p2\model.cpp
+	"model.h"
+	<string>
+	<fstream>
+	<sstream>
+	<iostream>
+
+1578408341 d:\github\gl\p2\model.h
+	<string>
+	<vector>
+	"painting.h"
+
+1578428523 d:\github\gl\p2\painting.h
+	"..\tgaimage.h"
+
+1578428497 source:d:\github\gl\p2\painting.cpp
+	"..\tgaimage.h"
+	<cmath>
+	"painting.h"
+	"iostream"
+
+1578431138 source:d:\github\gl\p2\main.cpp
+	<iostream>
+	"..\tgaimage.h"
+	"painting.h"
+	"model.h"
+	<string>
+	<limits>
+
