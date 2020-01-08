@@ -38,22 +38,22 @@
 	<vector>
 	"painting.h"
 
-1577637934 source:d:\fdocs\codeblocs\gl\p2\model.cpp
+1578475274 source:d:\fdocs\codeblocs\gl\p2\model.cpp
 	"model.h"
 	<string>
 	<fstream>
 	<sstream>
 	<iostream>
 
-1577622167 d:\fdocs\codeblocs\gl\p2\model.h
+1578475274 d:\fdocs\codeblocs\gl\p2\model.h
 	<string>
 	<vector>
 	"painting.h"
 
-1578239385 d:\fdocs\codeblocs\gl\p2\painting.h
+1578479613 d:\fdocs\codeblocs\gl\p2\painting.h
 	"..\tgaimage.h"
 
-1578238111 source:d:\fdocs\codeblocs\gl\p2\main.cpp
+1578482314 source:d:\fdocs\codeblocs\gl\p2\main.cpp
 	<iostream>
 	"..\tgaimage.h"
 	"painting.h"
@@ -61,7 +61,7 @@
 	<string>
 	<limits>
 
-1578240304 source:d:\fdocs\codeblocs\gl\p2\painting.cpp
+1578482245 source:d:\fdocs\codeblocs\gl\p2\painting.cpp
 	"..\tgaimage.h"
 	<cmath>
 	"painting.h"

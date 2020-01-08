@@ -1,0 +1,6 @@
+*.ext
+*.o
+*.tga
+bin/
+obj/
+*.txt

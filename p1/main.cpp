@@ -59,8 +59,8 @@ using namespace std;
 size_t const WIDTH = 1000;
 size_t const HEIGHT = 1000;
 //string const FILE_3D = "D:\\FDocs\\CodeBlocs\\gl\\p1\\test_3d.obj"; //
-//string const FILE_3D = "D:\\FDocs\\github\\tinyrenderer\\obj\\african_head\\african_head.obj";
-string const FILE_3D = "D:\\FDocs\\github\\tinyrenderer\\obj\\diablo3_pose\\diablo3_pose.obj";
+string const FILE_3D = "D:\\FDocs\\github\\tinyrenderer\\obj\\african_head\\african_head.obj";
+//string const FILE_3D = "D:\\FDocs\\github\\tinyrenderer\\obj\\diablo3_pose\\diablo3_pose.obj";
 //string const FILE_3D = "D:\\FDocs\\CodeBlocs\\gl\\p1\\seahorse.obj";
 
 int main()
@@ -68,6 +68,8 @@ int main()
 	TGAImage image(WIDTH, HEIGHT, TGAImage::RGB);
 
 	Model m(FILE_3D.c_str());
+
+	float zbuff[WIDTH * HEIGHT] = {0.};
 
 	for (size_t f = 0; f < m.nfaces(); ++f){
 		V2I v[3];

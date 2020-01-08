@@ -16,7 +16,7 @@
 	<math.h>
 	"tgaimage.h"
 
-1577638640 source:d:\fdocs\codeblocs\gl\p1\main.cpp
+1578226505 source:d:\fdocs\codeblocs\gl\p1\main.cpp
 	<iostream>
 	"..\tgaimage.h"
 	"painting.h"

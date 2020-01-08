@@ -69,38 +69,51 @@ int main()
 {
 	TGAImage image(WIDTH, HEIGHT, TGAImage::RGB);
 
-	//Model m(FILE_3D.c_str());
+	Model m(FILE_3D.c_str());
 
 	//size_t zbuf[WIDTH * HEIGHT] = {0};
-	//int32_t *zbuf = new int32_t[WIDTH * HEIGHT];// = {0};
-//	for (size_t i = 0; i < WIDTH * HEIGHT; ++i)
-//		zbuf[i] = std::numeric_limits<int>::min();
+	int32_t *zbuf = new int32_t[WIDTH * HEIGHT];
+	for (size_t i = 0; i < WIDTH * HEIGHT; ++i)
+		zbuf[i] = std::numeric_limits<int32_t>::min();
 
-//	for (size_t f = 0; f < m.nfaces(); ++f){
-//		V3I v[3];
-//
-//		for (size_t i = 0; i < 3; ++i){
-//			size_t x = WIDTH / 2. + m.vertex(m.face(f)[i]).x * WIDTH / 2.;
-//			size_t y = HEIGHT / 2. + m.vertex(m.face(f)[i]).y * HEIGHT / 2.;
-//			size_t z = DEPTH / 2. + m.vertex(m.face(f)[i]).z * DEPTH / 2.;
-//
-//			v[i].set(x, y, z); //v[i].set(WIDTH / 2. + m.vertex(m.face(f)[i]).x * WIDTH / 2., HEIGHT / 2. + m.vertex(m.face(f)[i]).y * HEIGHT / 2.);
-//		}
-//
-//		//for (size_t i = 0; i < 3; ++i)
-//		//	line(v[i].x, v[i].y, v[(i+1) % 3].x, v[(i+1) % 3].y, image, A);
-//		triangle(v[0], v[1], v[2], image, A, zbuf);
-//	}
+	#ifndef __DEBUG
+	for (size_t f = 0; f < m.nfaces(); ++f){
+		V3I v[3];
 
+		for (size_t i = 0; i < 3; ++i){
+			size_t x = WIDTH / 2. + m.vertex(m.face(f)[i]).x * WIDTH / 2.;
+			size_t y = HEIGHT / 2. + m.vertex(m.face(f)[i]).y * HEIGHT / 2.;
+			size_t z = DEPTH / 2. + m.vertex(m.face(f)[i]).z * DEPTH / 2.;
+
+			v[i].set(x, y, z); //v[i].set(WIDTH / 2. + m.vertex(m.face(f)[i]).x * WIDTH / 2., HEIGHT / 2. + m.vertex(m.face(f)[i]).y * HEIGHT / 2.);
+		}
+
+		//for (size_t i = 0; i < 3; ++i)
+		//	line(v[i].x, v[i].y, v[(i+1) % 3].x, v[(i+1) % 3].y, image, A);
+		triangle(v[0], v[1], v[2], image, A, zbuf);
+	}
+	#endif // DEBUG
+
+	#ifdef __DEBUG
 	V3I v1(10, 10, 10);
-	V3I v2(200, 100, 100);
-	V3I v3(100, 400, 400);
-	triangle(v1, v2, v3, image, A); //, zbuf);
+	V3I v2(200, 100, 10);
+	V3I v3(100, 300, 60);
+	triangle(v1, v2, v3, image, A, zbuf);
+
+//	v1.set(50, 50, 15);
+//	v2.set(200, 100, 15);
+//	v3.set(100, 400, 15);
+//	triangle(v1, v2, v3, image, A, zbuf);
+
+
+
+//	line(105, 400, 400, 400, image, RED);
 //	line(10, 10, 200, 10, image, RED);
 //	line(10, 20, 200, 10, image, RED);
 //	line(10, 30, 200, 10, image, RED);
 //	line(10, 40, 200, 10, image, RED);
 //	//image.set(10, 10, RED);
+	#endif // __DEBUG
 
 	image.flip_vertically();
 	image.write_tga_file("result.tga", false);

@@ -65,3 +65,4 @@ void line(int x1, int y1, int x2, int y2, TGAImage &img, TGAColor const &clr);
 //void triangle(V2I &v1, V2I &v2, V2I &v3, TGAImage &img, TGAColor const &clr);
 void triangle(V2I v1, V2I v2, V2I v3, TGAImage &img, TGAColor const &clr);
 void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr); //, int32_t *const zbuff); //int32_t zbuff[]);
+void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr, int32_t *const zbuf);

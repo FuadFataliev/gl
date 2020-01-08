@@ -222,7 +222,7 @@ void triangle_old(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr, in
 }
 
 
-void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr){ //, int32_t *const zbuff){
+void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr, int32_t *const zbuf){
 	if (v1.y > v2.y)
 		std::swap(v1, v2);
 	if (v2.y > v3.y)
@@ -230,27 +230,36 @@ void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr){ //, i
 	if (v1.y > v2.y)
 		std::swap(v1, v2);
 
-	int h13 = v3.y - v1.y;
-	int w13 = v3.x - v1.x + 1;
+	//int h13 = v3.y - v1.y;
+	//int w13 = v3.x - v1.x;
+	V3I main_dif = v3 - v1;
 
-	for (int y = 0; y < h13; ++y){
+	for (int y = 0; y <= main_dif.y; ++y){
+//		if (y == h13)
+//			int i = 10;
+
+
 		bool first_half = v1.y + y <= v2.y;
 
 		V3I a = first_half ? v1 : v2;
 
 		V3I dif = first_half ? v2 - v1 : v3 - v2;
-		size_t ah = dif.y;
 
-		if (ah == 0)
+		if (dif.y == 0)
 			return;
 
-		int aw = dif.x + 1;
+		float coef = (y - (first_half ? 0 : a.y - v1.y)) / (float)dif.y;
+		size_t x1 = a.x + dif.x * coef; //(y - (first_half ? 0 : a.y - v1.y)) / (float)dif.y;
+		int32_t z1 = a.z + dif.z * coef;
 
-		size_t x1 = a.x + aw * (y - (first_half ? 0 : a.y)) / (float)(ah + 1);
-		size_t x2 = v1.x + w13 * (y / (float)(h13 + 1));
+		coef = y / (float)main_dif.y;
+		size_t x2 = v1.x + main_dif.x * coef; //(y / (float)main_dif.y);
+		int32_t z2 = v1.z + main_dif.z * coef;
 
-		if (x1 > x2)
+		if (x1 > x2){
 			std::swap(x1, x2);
+			std::swap(z1, z2);
+		}
 
 		for (size_t x = x1; x <= x2; ++x) {
 			TGAColor col;
@@ -260,7 +269,59 @@ void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr){ //, i
 			else
 				col = clr;
 
-			img.set(x, v1.y + y, col);
+			int32_t z = z1;
+
+			if (x1 != x2)
+				z = z1 + (z2 - z1) * ((x - x1) / (float)(x2 - x1));
+
+			if (z > zbuf[(v1.y + y) * WIDTH + x]){
+				zbuf[(v1.y + y) * WIDTH + x] = z;
+
+				img.set(x, v1.y + y, col);
+			}
 		}
 	}
 }
+
+//void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr){ //, int32_t *const zbuff){
+//	if (v1.y > v2.y)
+//		std::swap(v1, v2);
+//	if (v2.y > v3.y)
+//		std::swap(v2, v3);
+//	if (v1.y > v2.y)
+//		std::swap(v1, v2);
+//
+//	int h13 = v3.y - v1.y;
+//	int w13 = v3.x - v1.x + 1;
+//
+//	for (int y = 0; y <= h13; ++y){
+//		bool first_half = v1.y + y <= v2.y;
+//
+//		V3I a = first_half ? v1 : v2;
+//
+//		V3I dif = first_half ? v2 - v1 : v3 - v2;
+//		size_t ah = dif.y;
+//
+//		if (ah == 0)
+//			return;
+//
+//		int aw = dif.x + 1;
+//
+//		size_t x1 = a.x + aw * (y - (first_half ? 0 : a.y)) / (float)(ah + 1);
+//		size_t x2 = v1.x + w13 * (y / (float)(h13 + 1));
+//
+//		if (x1 > x2)
+//			std::swap(x1, x2);
+//
+//		for (size_t x = x1; x <= x2; ++x) {
+//			TGAColor col;
+//
+//			if (x == x1 || x == x2)
+//				col = GREEN;
+//			else
+//				col = clr;
+//
+//			img.set(x, v1.y + y, col);
+//		}
+//	}
+//}
