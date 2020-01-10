@@ -7,6 +7,7 @@ TGAColor const WHITE(255, 255, 255, 0);
 auto const RED   = TGAColor(255, 0, 0, 0);
 auto const GREEN = TGAColor(0, 255, 0, 0);
 auto const BLUE  = TGAColor(0, 0, 255, 0);
+auto const LBLUE  = TGAColor(10, 100, 255, 0);
 auto const A  = TGAColor(255, 0, 255, 0);
 
 size_t const WIDTH = 800;
@@ -60,6 +61,8 @@ struct Vert3{
 	T operator*(const Vert3& v) {return x * v.x + y * v.y + z * v.z;}
 	Vert3 operator*(const float f) {return Vert3(f * x, f * y, f * z);}
 	Vert3 operator^(const Vert3& v) {return Vert3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);}
+
+	//Vert3<float> operator=(const Vert3<int>& v) {return Vert3<float>(v.x, v.y, v.z);}
 	//Vert3 operator+(Vert3 l, Vert3 const & r) {l.set(l.x + r.x, l.y + r.y, l.z + p.z); return l;}
 	//Vert3 operator=(Vert3 const & p) {this->set(p.x, p.y, p.z); return this*;};
 };

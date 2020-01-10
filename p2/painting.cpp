@@ -221,6 +221,7 @@ void triangle_old(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr, in
 	}
 }
 
+//#define GRID_ENABLED = 1
 
 void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr, int32_t *const zbuf){
 	if (v1.y > v2.y)
@@ -234,27 +235,39 @@ void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr, int32_
 	//int w13 = v3.x - v1.x;
 	V3I main_dif = v3 - v1;
 
+	size_t x1;
+	int32_t z1;
+	size_t x2;
+	int32_t z2;
+
 	for (int y = 0; y <= main_dif.y; ++y){
-//		if (y == h13)
-//			int i = 10;
-
-
 		bool first_half = v1.y + y <= v2.y;
-
-		V3I a = first_half ? v1 : v2;
 
 		V3I dif = first_half ? v2 - v1 : v3 - v2;
 
-		if (dif.y == 0)
-			return;
+		if (dif.y == 0){
+			if (first_half){
+				x1 = v1.x;
+				z1 = v1.z;
+			} else {
+				x1 = v3.x;
+				z1 = v3.z;
+			}
 
-		float coef = (y - (first_half ? 0 : a.y - v1.y)) / (float)dif.y;
-		size_t x1 = a.x + dif.x * coef; //(y - (first_half ? 0 : a.y - v1.y)) / (float)dif.y;
-		int32_t z1 = a.z + dif.z * coef;
+			x2 = v2.x;
+			z2 = v2.z;
+		} else {
+			V3I a = first_half ? v1 : v2;
 
-		coef = y / (float)main_dif.y;
-		size_t x2 = v1.x + main_dif.x * coef; //(y / (float)main_dif.y);
-		int32_t z2 = v1.z + main_dif.z * coef;
+			float coef = (y - (first_half ? 0 : a.y - v1.y)) / (float)dif.y;
+
+			x1 = a.x + dif.x * coef; //(y - (first_half ? 0 : a.y - v1.y)) / (float)dif.y;
+			z1 = a.z + dif.z * coef;
+
+			coef = y / (float)main_dif.y;
+			x2 = v1.x + main_dif.x * coef; //(y / (float)main_dif.y);
+			z2 = v1.z + main_dif.z * coef;
+		}
 
 		if (x1 > x2){
 			std::swap(x1, x2);
@@ -262,14 +275,13 @@ void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr, int32_
 		}
 
 		for (size_t x = x1; x <= x2; ++x) {
-			TGAColor col;
+			TGAColor col = clr;
 
-			if (x == x1 || x == x2)
+			#ifdef GRID_ENABLED
+			if ((x == x1) || (x == x2) || (y == 0) || (y == main_dif.y))
 				col = GREEN;
-			else
-				//col = TGAColor(clr.val * brightness, clr.bytespp);
-				col = clr; //TGAColor(clr.r * brightness, clr.g * brightness, clr.b * brightness, clr.bytespp);
-			col = clr;
+			#endif // GRID_ENABLED
+
 			int32_t z = z1;
 
 			if (x1 != x2)
@@ -284,7 +296,7 @@ void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr, int32_
 	}
 }
 
-//void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr){ //, int32_t *const zbuff){
+//void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr, int32_t *const zbuf){
 //	if (v1.y > v2.y)
 //		std::swap(v1, v2);
 //	if (v2.y > v3.y)
@@ -292,27 +304,37 @@ void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr, int32_
 //	if (v1.y > v2.y)
 //		std::swap(v1, v2);
 //
-//	int h13 = v3.y - v1.y;
-//	int w13 = v3.x - v1.x + 1;
+//	//int h13 = v3.y - v1.y;
+//	//int w13 = v3.x - v1.x;
+//	V3I main_dif = v3 - v1;
 //
-//	for (int y = 0; y <= h13; ++y){
+//	for (int y = 0; y <= main_dif.y; ++y){
+////		if (y == h13)
+////			int i = 10;
+//
+//
 //		bool first_half = v1.y + y <= v2.y;
 //
 //		V3I a = first_half ? v1 : v2;
 //
 //		V3I dif = first_half ? v2 - v1 : v3 - v2;
-//		size_t ah = dif.y;
 //
-//		if (ah == 0)
-//			return;
+//		if (dif.y == 0)
+//			continue;
 //
-//		int aw = dif.x + 1;
+//		float coef = (y - (first_half ? 0 : a.y - v1.y)) / (float)dif.y;
 //
-//		size_t x1 = a.x + aw * (y - (first_half ? 0 : a.y)) / (float)(ah + 1);
-//		size_t x2 = v1.x + w13 * (y / (float)(h13 + 1));
+//		size_t x1 = a.x + dif.x * coef; //(y - (first_half ? 0 : a.y - v1.y)) / (float)dif.y;
+//		int32_t z1 = a.z + dif.z * coef;
 //
-//		if (x1 > x2)
+//		coef = y / (float)main_dif.y;
+//		size_t x2 = v1.x + main_dif.x * coef; //(y / (float)main_dif.y);
+//		int32_t z2 = v1.z + main_dif.z * coef;
+//
+//		if (x1 > x2){
 //			std::swap(x1, x2);
+//			std::swap(z1, z2);
+//		}
 //
 //		for (size_t x = x1; x <= x2; ++x) {
 //			TGAColor col;
@@ -320,9 +342,19 @@ void triangle(V3I v1, V3I v2, V3I v3, TGAImage &img, TGAColor const &clr, int32_
 //			if (x == x1 || x == x2)
 //				col = GREEN;
 //			else
-//				col = clr;
+//				//col = TGAColor(clr.val * brightness, clr.bytespp);
+//				col = clr; //TGAColor(clr.r * brightness, clr.g * brightness, clr.b * brightness, clr.bytespp);
+//			//col = clr;
+//			int32_t z = z1;
 //
-//			img.set(x, v1.y + y, col);
+//			if (x1 != x2)
+//				z = z1 + (z2 - z1) * ((x - x1) / (float)(x2 - x1));
+//
+//			if (z > zbuf[(v1.y + y) * WIDTH + x]){
+//				zbuf[(v1.y + y) * WIDTH + x] = z;
+//
+//				img.set(x, v1.y + y, col);
+//			}
 //		}
 //	}
 //}
