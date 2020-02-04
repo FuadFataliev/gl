@@ -30,6 +30,7 @@ Model::Model(char const *file): vertexes(), faces(){
 
 			V3F vert;
 			ss >> vert.x >> vert.y >> vert.z;
+			//ss >> vert.x >> vert.y >> vert.z;
 
 			//vert.set(vert.x / 270, vert.y / 270, 0);
 

@@ -108,30 +108,32 @@
 	<string>
 	<limits>
 
-1578685524 source:d:\fdocs\codeblocs\gl\p3\main.cpp
+1579004804 source:d:\fdocs\codeblocs\gl\p3\main.cpp
 	<iostream>
 	"..\tgaimage.h"
 	"painting.h"
 	"model.h"
 	<string>
 	<limits>
+	<exception>
 
-1578684057 d:\fdocs\codeblocs\gl\p3\painting.h
+1578936501 d:\fdocs\codeblocs\gl\p3\painting.h
 	<cmath>
 	"..\tgaimage.h"
+	"iostream"
 
 1578674824 d:\fdocs\codeblocs\gl\p3\model.h
 	<string>
 	<vector>
 	"painting.h"
 
-1578567344 source:d:\fdocs\codeblocs\gl\p3\painting.cpp
+1579004904 source:d:\fdocs\codeblocs\gl\p3\painting.cpp
 	"..\tgaimage.h"
 	<cmath>
 	"painting.h"
 	"iostream"
 
-1578681930 source:d:\fdocs\codeblocs\gl\p3\model.cpp
+1578937307 source:d:\fdocs\codeblocs\gl\p3\model.cpp
 	"model.h"
 	<string>
 	<fstream>

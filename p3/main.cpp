@@ -4,6 +4,7 @@
 #include "model.h"
 #include <string>
 #include <limits>
+#include <exception>
 
 //#define __DEBUG 1
 
@@ -12,12 +13,15 @@ using namespace std;
 extern size_t const WIDTH;
 extern size_t const HEIGHT;
 extern size_t const DEPTH;
-//string const FILE_3D = "D:\\FDocs\\CodeBlocs\\gl\\p1\\test_3d.obj"; //
-string const FILE_3D = "D:\\FDocs\\github\\tinyrenderer\\obj\\african_head\\african_head.obj";
-//string const FILE_3D = "D:\\FDocs\\github\\tinyrenderer\\obj\\diablo3_pose\\diablo3_pose.obj";
-//string const FILE_3D = "D:\\FDocs\\CodeBlocs\\gl\\p1\\seahorse.obj";
 
+string const FILE_3D = "D:\\FDocs\\github\\tinyrenderer\\obj\\african_head\\african_head.obj";
 string const FILE_DIF = "D:\\FDocs\\github\\tinyrenderer\\obj\\african_head\\african_head_diffuse.tga";
+
+//string const FILE_3D = "D:\\FDocs\\github\\tinyrenderer\\obj\\boggie\\head.obj";
+//string const FILE_DIF = "D:\\FDocs\\github\\tinyrenderer\\obj\\boggie\\head_diffuse.tga";
+
+//string const FILE_3D = "D:\\FDocs\\github\\tinyrenderer\\obj\\boggie\\eyes.obj";
+//string const FILE_DIF = "D:\\FDocs\\github\\tinyrenderer\\obj\\boggie\\eyes_diffuse.tga";
 
 float calc_brightness(V3F *f){
 	V3F light(0, 0, -1);
@@ -34,15 +38,13 @@ void test(TGAImage &i){
 
 int main()
 {
-	auto color = GREEN;
+	//auto color = GREEN;
 
 	TGAImage *image = new TGAImage(WIDTH, HEIGHT, TGAImage::RGB);
 
 	TGAImage *dif_img = new TGAImage();
 	dif_img->read_tga_file(FILE_DIF.c_str());
 	dif_img->flip_vertically();
-	auto dif_height = dif_img->get_height();
-	auto dif_width = dif_img->get_width();
 
 	int32_t *zbuf = new int32_t[WIDTH * HEIGHT];
 	for (size_t i = 0; i < WIDTH * HEIGHT; ++i)
@@ -50,42 +52,37 @@ int main()
 
 	#ifndef __DEBUG
 	Model m(FILE_3D.c_str());
-
+	try{
 	for (size_t f = 0; f < m.nfaces(); ++f){
 		V3I v[3];
 		V3F world_crd[3];
 		V2F tex_crd[3];
 
-		//color = BLACK;
-		size_t r = 0, g = 0, b = 0;
-		//r, g, b = 0;
 		for (size_t i = 0; i < 3; ++i){
 			world_crd[i] = m.vertex(m.face(f)[i].v);
+
+			//world_crd[i] = world_crd[i] * 10.;
+
 			v[i].set((1. + world_crd[i].x) * WIDTH / 2., (1. + world_crd[i].y) * HEIGHT / 2., (1. + world_crd[i].z) * DEPTH / 2.);
 
+			//v[i] = v[i] * 2;
+
 			tex_crd[i] = m.texture(m.face(f)[i].t);
-
-			//color.val += dif_img->get(tex_crd[i].x * dif_width, tex_crd[i].y * dif_height).val;
-			color = dif_img->get(tex_crd[i].x * dif_width, tex_crd[i].y * dif_height);
-			//size_t r(0), g(0), b(0);
-			//size_t r, g, b = 0;
-			r += color.r;
-			g += color.g;
-			b += color.b;
 		}
-
-		color.raw[0] = b / 3;
-		color.raw[1] = g / 3;
-		color.raw[2] = r / 3;
 
 		float brightness = calc_brightness(world_crd);
 
 		if (brightness >= 0){
-			auto col = TGAColor(color.r * brightness, color.g * brightness, color.b * brightness, color.a);
+			//auto col = TGAColor(color.r * brightness, color.g * brightness, color.b * brightness, color.a);
+			cout << "face = " << f << endl;
+			cout << v[0]; cout << v[1]; cout << v[2];
+			triangle(v[0], v[1], v[2], tex_crd[0], tex_crd[1], tex_crd[2], *image, *dif_img, brightness, zbuf);
 
-			triangle(v[0], v[1], v[2], *image, col, zbuf);
 		}
 	}
+	} catch (exception &e){
+				cout << "error" << e.what();
+			}
 	#endif // DEBUG
 
 	#ifdef __DEBUG
@@ -117,16 +114,16 @@ int main()
 	V3I v1(100, 100, 15);
 	V3I v2(400, 100, 15);
 	V3I v3(250, 500, 15);
-	triangle(v1, v2, v3, image, color, zbuf);
+	triangleAB(v1, v2, v3, *image, zbuf);
 
 	v1.set(260, 500, 15);
-	v2.set(560, 500, 15);
+	v2.set(560, 500, 30);
 	v3.set(410, 100, 15);
-	triangle(v1, v2, v3, image, color, zbuf);
+	triangleAB(v1, v2, v3, *image, zbuf);
 
 
 
-//	line(105, 400, 400, 400, image, RED);
+	//line(252, 500, 408, 500, *image, RED);
 //	line(10, 10, 200, 10, image, RED);
 //	line(10, 20, 200, 10, image, RED);
 //	line(10, 30, 200, 10, image, RED);
